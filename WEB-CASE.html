@@ -1,37 +1,176 @@
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
-<!--  If necessary, please modify the charset parameter to specify the        -->
-<!--  character set of your HTML page.                                        -->
-<!--  ----------------------------------------------------------------------  -->
-
-<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
-
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: Please add the following <FORM> element to your page.             -->
-<!--  ----------------------------------------------------------------------  -->
-
-<form action="https://d7f000005lmmxua2--devzd.sandbox.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DBS000004udFh" method="POST">
-
-<input type=hidden name="orgid" value="00DBS000004udFh">
-<input type=hidden name="retURL" value="http://">
-
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
-<!--  these lines if you wish to test in debug mode.                          -->
-<!--  <input type="hidden" name="debug" value=1>                              -->
-<!--  <input type="hidden" name="debugEmail" value="akhil@valuehubit.com">    -->
-<!--  ----------------------------------------------------------------------  -->
-
-<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
-
-<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
-
-<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
-
-<label for="subject">Subject</label><input  id="subject" maxlength="80" name="subject" size="20" type="text" /><br>
-
-<label for="description">Description</label><textarea name="description"></textarea><br>
-
-<input type="submit" name="submit">
-
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Submit a Support Request</title>
+ 
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  .w2c-container {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.1);
+  }
+  .w2c-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0070d2;
+  }
+  .w2c-form-group {
+    margin-bottom: 18px;
+  }
+  .w2c-form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .w2c-form-group input,
+  .w2c-form-group select,
+  .w2c-form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  .w2c-submit-btn {
+    width: 100%;
+    padding: 12px 0;
+    background: #0070d2;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .w2c-submit-btn:hover {
+    background: #005bb5;
+  }
+</style>
+</head>
+ 
+<body>
+ 
+<div class="w2c-container">
+  <h2>Submit a Support Request</h2>
+ 
+  <form id="w2cForm"
+        action="https://d7f000005lmmxua2--devzd.sandbox.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8"
+        method="POST">
+ 
+    <!-- REQUIRED SALESFORCE FIELDS -->
+    <input type="hidden" name="orgid" value="00DBS000004udFh">
+    <input type="hidden" name="retURL" value="https://www.handshakes.ai/">
+ 
+    <!-- FORM TYPE (CUSTOM CASE PICKLIST) -->
+    <div class="w2c-form-group">
+      <label>Form Type *</label>
+      <select id="formType"
+              name="00NBS000005FORMTYPE"
+              required
+              onchange="toggleFields()">
+        <option value="">-- Select Form Type --</option>
+        <option value="Bug Report">Bug Report</option>
+        <option value="Support">Support</option>
+        <option value="Handshakes Datamart Query">Handshakes Datamart Query</option>
+        <option value="Handshakes KYB Trail">Handshakes KYB Trail</option>
+      </select>
+    </div>
+ 
+    <!-- SUBJECT -->
+    <div class="w2c-form-group" id="subjectGroup">
+      <label>Subject *</label>
+      <input name="subject" type="text" maxlength="80" required>
+    </div>
+ 
+    <!-- PRODUCT -->
+    <div class="w2c-form-group" id="productGroup">
+      <label>Product / Service</label>
+      <select name="00NBS000005bd1I">
+        <option value="">Select Product</option>
+        <option value="Handshakes App">Handshakes App</option>
+        <option value="Handshakes API">Handshakes API</option>
+        <option value="Handshakes XPERT">Handshakes XPERT</option>
+        <option value="Handshakes Website">Handshakes Website</option>
+        <option value="Handshakes Datamart Query">Handshakes Datamart Query</option>
+        <option value="Handshakes KYB Trail">Handshakes KYB Trail</option>
+        <option value="Other Services">Other Services</option>
+      </select>
+    </div>
+ 
+    <!-- USERNAME -->
+    <div class="w2c-form-group" id="usernameGroup">
+      <label>Username</label>
+      <input name="00NBS000005bjWL" type="text">
+	  <span class="tooltip">Enter your application username or registered email</span>
+                    </span>
+    </div>
+ 
+    <!-- EMAIL -->
+    <div class="w2c-form-group" id="emailGroup">
+      <label>Email</label>
+      <input id="emailField"
+             name="email"
+             type="email"
+             placeholder="you@example.com">
+			 <span class="tooltip">Enter your application username or registered email</span>
+                    </span>
+    </div>
+ 
+    <!-- DESCRIPTION -->
+    <div class="w2c-form-group" id="descriptionGroup">
+      <label>Description *</label>
+      <textarea name="description" rows="5" required></textarea>
+    </div>
+ 
+    <!-- ATTACHMENT -->
+    <div class="w2c-form-group" id="attachmentGroup">
+      <label>Attachment</label>
+      <input type="file" name="file">
+    </div>
+ 
+    <button type="submit" class="w2c-submit-btn">
+      Submit Case
+    </button>
+ 
+  </form>
+</div>
+ 
+<script>
+function toggleFields() {
+  const type = document.getElementById("formType").value;
+  const email = document.getElementById("emailField");
+ 
+  if (type === "Bug Report") {
+    document.getElementById("productGroup").style.display = "none";
+    document.getElementById("usernameGroup").style.display = "none";
+    document.getElementById("emailGroup").style.display = "none";
+ 
+    email.required = false;
+ 
+  } else if(type === "Handshakes Datamart Query"){
+    document.getElementById("productGroup").style.display = "none";
+ 
+  }else if(type === "Handshakes KYB Trail"){
+    document.getElementById("productGroup").style.display = "none";
+  }else {
+    // Show everything for Support / Datamart / KYB Trail
+    document.getElementById("productGroup").style.display = "";
+    document.getElementById("usernameGroup").style.display = "";
+    document.getElementById("emailGroup").style.display = "";
+    email.required = true;
+  }
+}
+toggleFields();
+</script>
+ 
+</body>
+</html>
